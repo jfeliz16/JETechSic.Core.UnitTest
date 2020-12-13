@@ -5,17 +5,25 @@ using System.Text;
 using Xunit;
 using JETech.SIC.Core.Clients.Models;
 using System.Linq;
+using JETech.SIC.Core.Data.Entities;
 
 namespace JETech.SIC.Core.UnitTest.Client
 {
     public class Client
     {
+        private readonly SicDbContext _dbContext;
+
+        public Client() {
+            _dbContext = new SicDbContext();
+        }
+
         [Fact]
         public async void GetClients() 
         {
             ActionQueryArgs<ClientModel> args = new ActionQueryArgs<ClientModel>();
+            
 
-            JETech.SIC.Core.Clients.Domain.Client client = new Clients.Domain.Client();
+            JETech.SIC.Core.Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
 
             var result = await client.GetClients(args);
 
@@ -29,7 +37,7 @@ namespace JETech.SIC.Core.UnitTest.Client
 
             args.PageArgs = new PageArgs() { Num = 2, Size = 10 };            
 
-            Clients.Domain.Client client = new Clients.Domain.Client();
+            Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
 
             var result = await client.GetClients(args);
 
