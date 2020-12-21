@@ -6,15 +6,20 @@ using Xunit;
 using JETech.SIC.Core.Clients.Models;
 using System.Linq;
 using JETech.SIC.Core.Data.Entities;
+using JETech.NetCoreWeb.Types;
+using JETechSic.Core.UnitTest;
+using JETech.SIC.Core.Clients.Interfaces;
 
 namespace JETech.SIC.Core.UnitTest.Client
 {
-    public class Client
+    public class ClientService
     {
         private readonly SicDbContext _dbContext;
+        private readonly IClientService _srvClient;
 
-        public Client() {
-            _dbContext = new SicDbContext();
+        public ClientService() {
+            _dbContext = Utility.GetInMemorySicDbContext();
+            _srvClient = new JETech.SIC.Core.Clients.Services.ClientService(_dbContext);
         }
 
         [Fact]
@@ -23,9 +28,9 @@ namespace JETech.SIC.Core.UnitTest.Client
             ActionQueryArgs<ClientModel> args = new ActionQueryArgs<ClientModel>();
             
 
-            JETech.SIC.Core.Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
+            //JETech.SIC.Core.Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
 
-            var result = await client.GetClients(args);
+            var result = await _srvClient.GetClients(args);
 
             Assert.NotNull(result.Data);
         }
@@ -37,9 +42,9 @@ namespace JETech.SIC.Core.UnitTest.Client
 
             args.PageArgs = new PageArgs() { Num = 2, Size = 10 };            
 
-            Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
+            //Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
 
-            var result = await client.GetClients(args);
+            var result = await _srvClient.GetClients(args);
 
             Assert.NotNull(result.Data);
             Assert.Equal(10, result.Data.ToList().Count);
