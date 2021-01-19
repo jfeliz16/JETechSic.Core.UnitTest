@@ -23,26 +23,24 @@ namespace JETech.SIC.Core.UnitTest.Client
         }
 
         [Fact]
-        public async void GetClients() 
+        public void GetClients() 
         {
             ActionQueryArgs<ClientModel> args = new ActionQueryArgs<ClientModel>();
 
-            var result = await _srvClient.GetClients(args);
-
-            var a = result.Data.First();
-
+            var result = _srvClient.GetClients(args);
+          
             Assert.NotNull(result.Data);
             Assert.True(result.Data.Count() > 0);
         }
 
         [Fact]
-        public async void GetClients_Paging()
+        public void GetClients_Paging()
         {
             ActionQueryArgs<ClientModel> args = new ActionQueryArgs<ClientModel>(){};
 
             args.PageArgs = new PageArgs() { Num = 2, Size = 10 };            
 
-            var result = await _srvClient.GetClients(args);
+            var result =  _srvClient.GetClients(args);
 
             Assert.NotNull(result.Data);
             Assert.Equal(10, result.Data.ToList().Count);
