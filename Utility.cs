@@ -16,21 +16,12 @@ namespace JETechSic.Core.UnitTest
 
             var context = new SicDbContext(options);
 
-            context.Persons.AddRange(DataMockup.GetPerson());
-            //context.xadmsucursalmst.AddRange(MockupData.Sucursales());
-            //context.eadmtasacambiodet.AddRange(MockupData.TasasCambio());
-            //context.xadmsectordirmst.AddRange(MockupData.Sector());
-            //context.xadmmonedamst.AddRange(MockupData.Monedas());
-            //context.eadmrolcfg.AddRange(MockupData.Roles());
-            //context.eadmrolatributodet.AddRange(MockupData.Atributos());
-            //context.xadmciudadmst.AddRange(MockupData.Ciudades());
-            //context.eadmtipoidcfg.AddRange(MockupData.TiposIdentificacion());
-            //context.eadmsectorfinmst.AddRange(MockupData.SectoresEconomicos());
-            //context.eadmfuenterecmst.AddRange(MockupData.FuenteRecursos());
-            //context.xadmprovinciamst.AddRange(MockupData.Provincias());
-            //context.xadmpaismst.AddRange(MockupData.Paises());
-            //context.xadmpaisdet.AddRange(MockupData.DetallePais());
-            //context.eadmmotivomst.AddRange(MockupData.Motivos());
+            var dataMockup = new DataMockup(context);
+
+            context.Statues.AddRange(dataMockup.GetStatues());   
+            context.Persons.AddRange(dataMockup.GetPersons());
+            context.Clients.AddRange(dataMockup.GetClients());
+            
             context.SaveChanges();
             return context;
         }

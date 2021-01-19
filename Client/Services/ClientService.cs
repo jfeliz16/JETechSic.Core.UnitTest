@@ -26,13 +26,13 @@ namespace JETech.SIC.Core.UnitTest.Client
         public async void GetClients() 
         {
             ActionQueryArgs<ClientModel> args = new ActionQueryArgs<ClientModel>();
-            
-
-            //JETech.SIC.Core.Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
 
             var result = await _srvClient.GetClients(args);
 
+            var a = result.Data.First();
+
             Assert.NotNull(result.Data);
+            Assert.True(result.Data.Count() > 0);
         }
 
         [Fact]
@@ -41,8 +41,6 @@ namespace JETech.SIC.Core.UnitTest.Client
             ActionQueryArgs<ClientModel> args = new ActionQueryArgs<ClientModel>(){};
 
             args.PageArgs = new PageArgs() { Num = 2, Size = 10 };            
-
-            //Clients.Domain.Client client = new Clients.Domain.Client(_dbContext);
 
             var result = await _srvClient.GetClients(args);
 
